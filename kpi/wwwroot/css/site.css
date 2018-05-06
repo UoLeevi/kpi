@@ -47,11 +47,19 @@ body {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 620px) {
     body {
         font-size: 12px;
         line-height: 20px;
 
+        -webkit-text-size-adjust: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 11px;
+        line-height: 18px;
         -webkit-text-size-adjust: none;
     }
 }
