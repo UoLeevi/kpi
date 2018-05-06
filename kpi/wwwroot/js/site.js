@@ -32,7 +32,7 @@
                 function () {
                     typing(
                         document.querySelector(".typing"),
-                        ["yourcompany", "nextinvestment", "digitalsolutions", "modernmanufacturing", "industry4.0", "designagency", "yourname"]
+                        ["nextinvestment", "digitalsolutions", "engineeredsuccess", "industry4.0", "designagency", "yourname", "yourcompany"]
                     );
                 },
                 2800);
@@ -48,36 +48,52 @@
         elementToType,
         textsToType) {
         var i = 0;
-        (function typeText(i) {
-            var j = 0;
-            var textToType = textsToType[i];
-            var typeLetterByLetter = setInterval(
-                function () {
-                    var letter = textToType[j];
-                    elementToType.innerText += letter;
-                    if (++j === textToType.length) {
-                        clearInterval(typeLetterByLetter);
-                        setTimeout(
+
+        var delayBetweenUntypeChar = 70;
+        var delayBetweenTypeChar = 130;
+        var delayBeforeUntype = 1300;
+        var delayBeforeType = 400;
+
+        var untype = setInterval(
+            function () {
+                if (elementToType.innerText.length > 0) {
+                    elementToType.innerText = elementToType.innerText.slice(0, -1);
+                } else {
+                    clearInterval(untype);
+                    (function typeText(i) {
+                        var j = 0;
+                        var textToType = textsToType[i];
+                        var typeLetterByLetter = setInterval(
                             function () {
-                                var untypeLetterByLetter = setInterval(
-                                    function () {
-                                        elementToType.innerText = elementToType.innerText.slice(0, -1);
-                                        if (--j === 0) {
-                                            setTimeout(
+                                var letter = textToType[j];
+                                elementToType.innerText += letter;
+                                if (++j === textToType.length) {
+                                    clearInterval(typeLetterByLetter);
+                                    setTimeout(
+                                        function () {
+                                            var untypeLetterByLetter = setInterval(
                                                 function () {
-                                                    clearInterval(untypeLetterByLetter);
-                                                    typeText(++i % textsToType.length);
+                                                    elementToType.innerText = elementToType.innerText.slice(0, -1);
+                                                    if (--j === 0) {
+                                                        setTimeout(
+                                                            function () {
+                                                                clearInterval(untypeLetterByLetter);
+                                                                typeText(++i % textsToType.length);
+                                                            },
+                                                            delayBeforeType);
+                                                    }
                                                 },
-                                                400); // wait time between typing texts
-                                        }
-                                    },
-                                    70); // wait time between untyping characters
+                                                delayBetweenUntypeChar);
+                                        },
+                                        delayBeforeUntype);
+                                }
                             },
-                            1300); // wait time before starting to untyping characters
-                    }
-                },
-                130); // wait time between typing characters
-        })(i);
+                            delayBetweenTypeChar);
+                    })(i);
+                }
+            },
+            delayBetweenUntypeChar
+        );
     }
 
 })();

@@ -62,6 +62,20 @@ a {
     transform: translate(-50%, -50%);
 }
 
+.below-1200w {
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .below-1200w {
+        display: inline;
+    }
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
 .color-white {
     color: #fff;
 }
