@@ -21,6 +21,7 @@
         "DOMContentLoaded",
         function (event) {
             var yourcompanyKpiAppAnchor = document.getElementById("kpi-yourcompany");
+            var chartContainer = document.getElementById("chart-container");
             var ctx = document.getElementById('kpi-chart').getContext('2d');
 
             yourcompanyKpiAppAnchor.addEventListener(
@@ -28,8 +29,9 @@
                 drawChartOnce)
 
             function drawChartOnce() {
-                var chart = new Chart(ctx, chartSettings);
                 yourcompanyKpiAppAnchor.removeEventListener("click", drawChartOnce);
+                chartContainer.classList.remove("animation-paused");
+                setTimeout(function () { new Chart(ctx, chartSettings); }, 400);               
             }
         });
 })();
