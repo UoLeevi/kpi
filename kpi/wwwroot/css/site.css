@@ -44,6 +44,7 @@ body {
     body {
         font-size: 14px;
         line-height: 23px;
+        -webkit-text-size-adjust: none;
     }
 }
 
@@ -51,8 +52,6 @@ body {
     body {
         font-size: 12px;
         line-height: 20px;
-
-        -webkit-text-size-adjust: none;
     }
 }
 
@@ -60,7 +59,6 @@ body {
     body {
         font-size: 11px;
         line-height: 18px;
-        -webkit-text-size-adjust: none;
     }
 }
 
