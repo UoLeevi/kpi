@@ -1,4 +1,14 @@
-﻿@font-face {
+﻿/*
+    ## Main colors
+       Orange:      #f18805
+       Blue:        #3366cc
+       White:       #ffffff
+       Dark:        #666666
+       Translucent: rgba(0, 0, 0, 0.1)
+*/
+
+
+@font-face {
     font-family: 'Open Sans';
     src: url('/fonts/Open Sans/OpenSans-Regular.woff') format('woff'), /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
     url('/fonts/Open Sans/OpenSans-Regular.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
@@ -65,9 +75,7 @@ a {
     height: 30vw;
     width: 60vw
 }
-    .chart-container canvas {
 
-    }
 @media screen and (max-width: 500px) {
     .chart-container {
         width: calc(100vw - 30px);

@@ -1,4 +1,7 @@
 ﻿(function () {
+    Chart.defaults.global.defaultFontColor = '#666666';
+    Chart.defaults.global.defaultFontFamily = 'Open Sans';
+
     var chartSettings = {
         type: 'line',
         data: {
