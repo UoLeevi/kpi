@@ -28,10 +28,14 @@
                 "click",
                 drawChartOnce);
 
-            typing(
-                document.querySelector(".typing"),
-                ["yourcompany", "nextinvestment", "digitalsolutions", "modernmanufacturing", "industry4.0", "designagency", "yourname"]
-            );
+            setTimeout(
+                function () {
+                    typing(
+                        document.querySelector(".typing"),
+                        ["yourcompany", "nextinvestment", "digitalsolutions", "modernmanufacturing", "industry4.0", "designagency", "yourname"]
+                    );
+                },
+                2800);
 
             function drawChartOnce() {
                 yourcompanyKpiAppAnchor.removeEventListener("click", drawChartOnce);
