@@ -1,0 +1,15 @@
+[Unit]
+Description=ASP.NET Core App for kpi.app running on Ubuntu
+
+[Service]
+WorkingDirectory=/var/aspnetcore/kpi-app
+ExecStart=/usr/bin/dotnet /var/aspnetcore/kpi-app/kpi.dll
+Restart=always
+RestartSec=10
+SyslogIdentifier=dotnet-kpi
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+[Install]
+WantedBy=multi-user.target
