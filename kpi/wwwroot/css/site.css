@@ -21,6 +21,12 @@
     }
 }
 
+@keyframes caret {
+    50% {
+        border-color: transparent;
+    }
+}
+
 html,
 body {
     min-height: 100%;
@@ -75,6 +81,13 @@ a {
     .hov-highlight:hover {
         filter: brightness(130%);
     }
+
+.typing {
+    border-right: 2px solid #fff;
+    /*-webkit-animation: caret 1s steps(1) infinite;*/
+    animation: caret 1s steps(1) infinite;
+    padding-right: 4px;
+}
 
 .animation-paused {
     animation-play-state: paused;
