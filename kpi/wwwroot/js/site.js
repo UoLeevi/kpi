@@ -2,18 +2,43 @@
     Chart.defaults.global.defaultFontColor = '#666666';
     Chart.defaults.global.defaultFontFamily = 'Open Sans';
 
+    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    function rollData(
+        chart,
+        newLabel,
+        newValue) {
+        chart.data.labels.shift();
+        chart.data.labels.push(newLabel);
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data.shift();
+            dataset.data.push(newValue);
+        });
+        chart.update();
+    }
+
+    var monthData = {
+        labels: months.slice(0, 12),
+        datasets: [{
+            label: "KPI",
+            backgroundColor: '#3366ff',
+            borderColor: '#f18805',
+            data: [0, 15, 10, 5, 25, 30, 40, 45, 41, 35, 44, 51],
+        }]
+    };
+
     var chartSettings = {
         type: 'line',
-        data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
-            datasets: [{
-                label: "KPI",
-                backgroundColor: '#3366ff',
-                borderColor: '#f18805',
-                data: [0, 25, 10, 5, 35, 50, 100],
-            }]
-        },
+        data: monthData,
         options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        suggestedMax: 60
+                    }
+                }]
+            }
         }
     };
 
@@ -40,7 +65,36 @@
             function drawChartOnce() {
                 yourcompanyKpiAppAnchor.removeEventListener("click", drawChartOnce);
                 chartContainer.classList.remove("animation-paused");
-                setTimeout(function () { new Chart(ctx, chartSettings); }, 400);
+                setTimeout(function () {
+                    var monthsChart = new Chart(ctx, chartSettings);
+                    var monthIndex = monthsChart.data.labels.length - 1;
+
+                    setInterval(
+                        function () {
+                            rollData(
+                                monthsChart,
+                                months[++monthIndex % months.length],
+                                getRandomNewValue(
+                                    monthsChart.data.datasets[0].data[11],
+                                    100,
+                                    0,
+                                    10));
+                        },
+                        1500);
+
+                    function getRandomNewValue(
+                        previousValue,
+                        maxValue,
+                        minValue,
+                        maxChange) {
+                        return Math.min(
+                            Math.max(
+                                previousValue + Math.floor(
+                                    (Math.random() - .5) * 2 * maxChange),
+                                0),
+                            100);
+                    }
+                }, 400);
             }
         });
 
