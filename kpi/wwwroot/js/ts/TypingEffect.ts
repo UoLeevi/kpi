@@ -2,8 +2,8 @@
 
 class TypingEffect {
     private readonly element: HTMLElement;
-    private readonly untypingFinished = new DelegateEvent<void>();
-    private readonly typingFinished = new DelegateEvent<void>();
+    private readonly untypingFinishedEvent = new DelegateEvent<void>();
+    private readonly typingFinishedEvent = new DelegateEvent<void>();
 
     private readonly waitBetweenCharacterUntyping = 60;
     private readonly waitBetweenCharacterTyping = 110;
@@ -20,7 +20,7 @@ class TypingEffect {
 
         let i = -1;
 
-        this.UntypingFinished.add(
+        this.untypingFinished.add(
             () => setTimeout(
                 function () {
                     if (this.isTyping)
@@ -29,7 +29,7 @@ class TypingEffect {
                 }.bind(this),
                 this.waitBeforeTyping));
 
-        this.TypingFinished.add(
+        this.typingFinished.add(
             () => setTimeout(
                 function () {
                     if (this.isTyping)
@@ -54,19 +54,19 @@ class TypingEffect {
                 clearInterval(this.typingIntervalId);
                 break;
             case StopTiming.AfterUntyping:
-                this.UntypingFinished.addOnce(
+                this.untypingFinished.addOnce(
                     function () { this.isTyping = false; }.bind(this));
                 break;
             case StopTiming.AfterTyping:
-                this.TypingFinished.addOnce(
+                this.typingFinished.addOnce(
                     function () { this.isTyping = false; }.bind(this));
                 break;
         }
         return this;
     }
 
-    public get UntypingFinished(): IDelegateEvent<void> { return this.untypingFinished; }
-    public get TypingFinished(): IDelegateEvent<void> { return this.typingFinished; }
+    public get untypingFinished(): IDelegateEvent<void> { return this.untypingFinishedEvent; }
+    public get typingFinished(): IDelegateEvent<void> { return this.typingFinishedEvent; }
 
     private typeText(
         text: string): void {

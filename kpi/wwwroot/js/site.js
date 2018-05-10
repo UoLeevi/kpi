@@ -64,7 +64,8 @@
             function drawChartOnce() {
                 yourcompanyKpiAppAnchor.removeEventListener("click", drawChartOnce);
 
-                typing.stop(StopTiming.AfterTyping);
+                typing.untypingFinished.addOnce(() => collapse(document.getElementById("kpi-tagline")));
+                typing.stop(StopTiming.AfterUntyping);
 
                 chartContainer.classList.remove("animation-paused");
                 setTimeout(function () {
@@ -82,7 +83,7 @@
                                     0,
                                     10));
                         },
-                        1500);
+                        4000);
 
                     function getRandomNewValue(
                         previousValue,
@@ -100,4 +101,14 @@
             }
         });
 
+    function collapse(
+        element) {
+        element.addEventListener(
+            "transitionend",
+            function collapseOnce(event) {
+                element.removeEventListener("transitionend", collapseOnce);
+                element.classList.add("hidden");
+            });
+        element.classList.add("fade-out");
+    }
 })();

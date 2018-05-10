@@ -24,19 +24,19 @@ var DelegateEvent = /** @class */ (function () {
 var TypingEffect = /** @class */ (function () {
     function TypingEffect(element, texts) {
         var _this = this;
-        this.untypingFinished = new DelegateEvent();
-        this.typingFinished = new DelegateEvent();
+        this.untypingFinishedEvent = new DelegateEvent();
+        this.typingFinishedEvent = new DelegateEvent();
         this.waitBetweenCharacterUntyping = 60;
         this.waitBetweenCharacterTyping = 110;
         this.waitBeforeUntyping = 1800;
         this.waitBeforeTyping = 400;
         this.element = element;
         var i = -1;
-        this.UntypingFinished.add(function () { return setTimeout(function () {
+        this.untypingFinished.add(function () { return setTimeout(function () {
             if (this.isTyping)
                 this.typeText(texts[++i % texts.length]);
         }.bind(_this), _this.waitBeforeTyping); });
-        this.TypingFinished.add(function () { return setTimeout(function () {
+        this.typingFinished.add(function () { return setTimeout(function () {
             if (this.isTyping)
                 this.untypeText();
         }.bind(_this), _this.waitBeforeUntyping); });
@@ -56,21 +56,21 @@ var TypingEffect = /** @class */ (function () {
                 clearInterval(this.typingIntervalId);
                 break;
             case StopTiming.AfterUntyping:
-                this.UntypingFinished.addOnce(function () { this.isTyping = false; }.bind(this));
+                this.untypingFinished.addOnce(function () { this.isTyping = false; }.bind(this));
                 break;
             case StopTiming.AfterTyping:
-                this.TypingFinished.addOnce(function () { this.isTyping = false; }.bind(this));
+                this.typingFinished.addOnce(function () { this.isTyping = false; }.bind(this));
                 break;
         }
         return this;
     };
-    Object.defineProperty(TypingEffect.prototype, "UntypingFinished", {
-        get: function () { return this.untypingFinished; },
+    Object.defineProperty(TypingEffect.prototype, "untypingFinished", {
+        get: function () { return this.untypingFinishedEvent; },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(TypingEffect.prototype, "TypingFinished", {
-        get: function () { return this.typingFinished; },
+    Object.defineProperty(TypingEffect.prototype, "typingFinished", {
+        get: function () { return this.typingFinishedEvent; },
         enumerable: true,
         configurable: true
     });

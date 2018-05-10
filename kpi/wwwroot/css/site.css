@@ -125,11 +125,20 @@ a {
     border-right: 2px solid #fff;
     /*-webkit-animation: caret 1s steps(1) infinite;*/
     animation: caret 1s steps(1) infinite;
-    padding-right: 4px;
+    padding-right: 2px;
 }
 
 .animation-paused {
     animation-play-state: paused;
+}
+
+.fade-out {
+    transition: opacity 800ms ease-in-out;
+    opacity: 0;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 #chart-container {
