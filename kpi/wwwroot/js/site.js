@@ -6,7 +6,7 @@
     var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
     var chartTypeIndex = 0;
-    var chartTypes = ["line", "bar", "radar", "pie", "doughnut"];
+    var chartTypes = ["line", "bar", "radar", "polarArea", "pie", "doughnut"];
 
     var monthSeries = {
         labels: months.slice(0),
@@ -56,6 +56,35 @@
                 chartSettings.options = {
                     legend: {
                         display: false
+                    },
+                    scale: {
+                        ticks: {
+                            backdropColor: 'rgba(0,0,0,0.1)'
+                        }
+                    }
+                };
+                return chartSettings;
+
+            case "polarArea":
+                chartSettings.data.datasets[0].backgroundColor = [
+                    'rgba(51, 102, 204, 0.00)',
+                    'rgba(51, 102, 204, 0.04)',
+                    'rgba(51, 102, 204, 0.08)',
+                    'rgba(51, 102, 204, 0.12)',
+                    'rgba(51, 102, 204, 0.16)',
+                    'rgba(51, 102, 204, 0.20)',
+                    'rgba(51, 102, 204, 0.24)',
+                    'rgba(51, 102, 204, 0.28)',
+                    'rgba(51, 102, 204, 0.32)',
+                    'rgba(51, 102, 204, 0.34)',
+                    'rgba(51, 102, 204, 0.38)',
+                    'rgba(51, 102, 204, 0.42)'
+                ];
+                chartSettings.data.datasets[0].pointBorderColor = '#f18805';
+                chartSettings.data.datasets[0].pointBackgroundColor = 'rgba(51, 102, 204, 0.4)';
+                chartSettings.options = {
+                    legend: {
+                        position: 'right'
                     },
                     scale: {
                         ticks: {
