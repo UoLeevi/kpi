@@ -143,15 +143,24 @@ a {
 
 #chart-container {
     position: relative;
-    height: 30vw;
-    width: 60vw;
+    width: 50vw;
+    height: 25vw;
     animation-name: expand-height;
     animation-duration: 400ms;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1200px) {
     #chart-container {
-        width: calc(100vw - 30px);
-        height: calc(60vw - 20px);
+        width: 70vw;
+        height: 35vw;
     }
 }
+
+@media screen and (max-width: 820px) {
+    #chart-container {
+        width: 90vw;
+        height: 45vw;
+    }
+}
+
+

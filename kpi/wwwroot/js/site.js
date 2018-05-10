@@ -33,6 +33,9 @@
             case "bar":
                 chartSettings.data.datasets[0].backgroundColor = '#3366ff';
                 chartSettings.options = {
+                    legend: {
+                        display: false
+                    },
                     scales: {
                         yAxes: [{
                             ticks: {
@@ -46,7 +49,19 @@
 
 
             case "radar":
-                chartSettings.data.datasets[0].backgroundColor = '#3366ff';
+                chartSettings.data.datasets[0].pointBorderColor = '#f18805';
+                chartSettings.data.datasets[0].pointBackgroundColor = '#3366ff';
+                chartSettings.data.datasets[0].lineTension = 0.1;
+                chartSettings.options = {
+                    legend: {
+                        display: false
+                    },
+                    scale: {
+                        ticks: {
+                            backdropColor: 'rgba(0,0,0,0.1)'
+                        }
+                    }
+                };
                 return chartSettings;
 
             default:
@@ -64,6 +79,11 @@
                     changeHue('#3366ff', 20),
                     changeHue('#3366ff', 25)
                 ];
+                chartSettings.options = {
+                    legend: {
+                        position: 'right'
+                    }
+                };
                 return chartSettings;
         }
     }
@@ -160,7 +180,10 @@
         monthSeries.values.shift();
         monthSeries.values.push(newValue);
 
-        chart.update();
+        chart.update({
+            duration: 800,
+            easing: 'easeOutCubic'
+        });
     }
 
     function collapse(
