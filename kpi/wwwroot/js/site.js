@@ -66,20 +66,10 @@
                 return chartSettings;
 
             case "polarArea":
-                chartSettings.data.datasets[0].backgroundColor = [
-                    'rgba(51, 102, 204, 0.00)',
-                    'rgba(51, 102, 204, 0.04)',
-                    'rgba(51, 102, 204, 0.08)',
-                    'rgba(51, 102, 204, 0.12)',
-                    'rgba(51, 102, 204, 0.16)',
-                    'rgba(51, 102, 204, 0.20)',
-                    'rgba(51, 102, 204, 0.24)',
-                    'rgba(51, 102, 204, 0.28)',
-                    'rgba(51, 102, 204, 0.32)',
-                    'rgba(51, 102, 204, 0.34)',
-                    'rgba(51, 102, 204, 0.38)',
-                    'rgba(51, 102, 204, 0.42)'
-                ];
+                chartSettings.data.datasets[0].backgroundColor = monthSeries.labels.map(
+                    function (value, index) {
+                        return 'rgba(51, 102, 204, ' + 0.04 * index + ')';
+                    });
                 chartSettings.data.datasets[0].pointBorderColor = '#f18805';
                 chartSettings.data.datasets[0].pointBackgroundColor = 'rgba(51, 102, 204, 0.4)';
                 chartSettings.options = {
@@ -95,20 +85,10 @@
                 return chartSettings;
 
             default:
-                chartSettings.data.datasets[0].backgroundColor = [
-                    'rgba(51, 102, 204, 0.00)',
-                    'rgba(51, 102, 204, 0.08)',
-                    'rgba(51, 102, 204, 0.16)',
-                    'rgba(51, 102, 204, 0.24)',
-                    'rgba(51, 102, 204, 0.32)',
-                    'rgba(51, 102, 204, 0.40)',
-                    'rgba(51, 102, 204, 0.48)',
-                    'rgba(51, 102, 204, 0.56)',
-                    'rgba(51, 102, 204, 0.64)',
-                    'rgba(51, 102, 204, 0.72)',
-                    'rgba(51, 102, 204, 0.80)',
-                    'rgba(51, 102, 204, 0.88)'
-                ];
+                chartSettings.data.datasets[0].backgroundColor = monthSeries.labels.map(
+                    function (value, index) {
+                        return 'rgba(51, 102, 204, ' + 0.08 * index + ')';
+                    });
                 chartSettings.options = {
                     legend: {
                         position: 'right'
