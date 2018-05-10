@@ -142,6 +142,8 @@ a {
 }
 
 #chart-container {
+    margin-left: auto;
+    margin-right: auto;
     position: relative;
     width: 50vw;
     height: 25vw;
