@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <div class="b-center">
+    <main class="b-center">
         @RenderBody()
-    </div>
+    </main>
+    <footer>
+        @RenderSection("Footer", required: false)
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
-    <script src="~/js/ts.js"></script>
-    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

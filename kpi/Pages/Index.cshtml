@@ -4,9 +4,16 @@
     ViewData["Title"] = "KPI.app";
     Layout = "_Layout";
 }
+@section Footer {
+    <p class="flex-1"><a href="/Samples">Sample Dashboards</a></p>
+    <p class="flex-1">© @DateTime.Today.Year Leevi Uotinen. All Rights Reserved</p>
+}
+@section Scripts {
+    <script src="~/js/ts.js"></script>
+    <script src="~/js/site.js"></script>
+}
 
 <div id="chart-container" class="animation-paused">
     <canvas id="kpi-chart"></canvas>
 </div>
 <h2 id="kpi-tagline" class="color-white text-center nowrap">You could soon have your KPI Dashboard<br class="below-1200w" /> here at <a id="kpi-yourcompany" class="color-bright hov-highlight" href="#"><span class="typing">yourcompany</span>.kpi.app</a>!</h2>
-

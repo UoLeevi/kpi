@@ -29,6 +29,7 @@
 
 html {
     min-height: 100%;
+    overflow: hidden;
 }
 
 body {
@@ -68,6 +69,11 @@ h2 {
 
 a {
     text-decoration: none;
+}
+
+.flex-1 {
+    flex: 1;
+    margin: auto;
 }
 
 .b-center-v {
@@ -165,4 +171,27 @@ a {
     }
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    color: #666666;
+    line-height: 40px; /* footer height */
+    display: flex;
+    flex-wrap: wrap;
+}
 
+    footer a {
+        color: #666666;
+        transition: color 100ms ease-out;
+    }
+        footer a:hover {
+            color: #f18805;
+        }
+
+    footer p {
+        white-space: nowrap;
+        padding: 0 10px;
+    }
