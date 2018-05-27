@@ -1,12 +1,33 @@
 ﻿NodeList.prototype.forEach = Array.prototype.forEach;
 HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
-(function () {
-    Chart.defaults.global.defaultFontColor = '#666666';
-    Chart.defaults.global.defaultFontFamily = 'Open Sans';
-    Chart.defaults.global.elements.rectangle.borderWidth = 3;
+NodeList.prototype.indexOf = Array.prototype.indexOf;
+HTMLCollection.prototype.indexOf = Array.prototype.indexOf;
 
+Chart.defaults.global.defaultFontColor = '#666666';
+Chart.defaults.global.defaultFontFamily = 'Open Sans';
+Chart.defaults.global.elements.rectangle.borderWidth = 3;
+
+(function () {
     var supportedTickerSymbols = [];
+
+    var initiateSuggestionBoxesWhenReady = countDown(2,
+        function () {
+            document
+                .querySelectorAll('.autocomplete ul.droplist')
+                .forEach(function (droplist) {
+                    var droplistItems = supportedTickerSymbols.map(
+                        function (ticker) {
+                            return createElementFromHTML(
+                                '<li class="' + ticker.toLowerCase() + '">' + ticker.toUpperCase() + '</li>');
+                        });
+                    droplistItems.forEach(droplist.appendChild.bind(droplist));
+                });
+        });
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initiateSuggestionBoxesWhenReady);
 
     var connection = new signalR.HubConnectionBuilder()
         //.withUrl("http://localhost:5099/hubs/stocks")
@@ -55,6 +76,7 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
         "ReceiveSupportedTickerSymbols",
         function (tickerSymbols) {
             supportedTickerSymbols = tickerSymbols.sort();
+            initiateSuggestionBoxesWhenReady();
         });
 
     connection.on(
@@ -106,6 +128,8 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
                 "keydown",
                 function (e) {
                     var currentSelection = droplist.querySelector(".pre-selected");
+                    var matches = droplist.querySelectorAll(".show");
+                    var indexOfCurrentSelection = matches.indexOf(currentSelection);
 
                     switch (e.key) {
                         case "Tab":
@@ -115,15 +139,15 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
                         case "ArrowUp":
                             if (currentSelection) {
                                 currentSelection.classList.remove("pre-selected");
-                                if (currentSelection.previousElementSibling)
-                                    currentSelection.previousElementSibling.classList.add("pre-selected");
+                                if (--indexOfCurrentSelection >= 0)
+                                    matches[indexOfCurrentSelection].classList.add("pre-selected");
                             }
                             break;
                         case "ArrowDown":
                             if (currentSelection) {
                                 currentSelection.classList.remove("pre-selected");
-                                if (currentSelection.nextElementSibling)
-                                    currentSelection.nextElementSibling.classList.add("pre-selected");
+                                if (++indexOfCurrentSelection < matches.length)
+                                    matches[indexOfCurrentSelection].classList.add("pre-selected");
                             } else {
                                 droplist.firstChild.classList.add("pre-selected");
                             }
@@ -175,14 +199,15 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
                     ? findTickerSymbolsStartingWith(addIntradayQuotesInput.value)
                     : supportedTickerSymbols;
 
-                var droplistItems = tickers.map(
-                    function (ticker) {
-                        return createElementFromHTML(
-                            '<li class="' + ticker.toLowerCase() + '">' + ticker.toUpperCase() + '</li>');
+                document
+                    .querySelectorAll('.autocomplete ul.droplist')
+                    .forEach(function (droplist) {
+                        droplist.children.forEach(function (li) {
+                            li.classList.remove("show");
+                            if (tickers.indexOf(li.className.toUpperCase()) !== -1)
+                                li.classList.add("show");
+                        });
                     });
-
-                droplist.innerHTML = '';
-                droplistItems.forEach(droplist.appendChild.bind(droplist));
             }
 
             function findTickerSymbolsStartingWith(searchString) {
@@ -230,4 +255,13 @@ HTMLCollection.prototype.forEach = Array.prototype.forEach;
 
         return div.firstChild;
     }
+
+    function countDown(
+        count,
+        callback) {
+        return function () {
+            if (--count === 0)
+                callback();
+        };
+    } 
 })();

@@ -263,7 +263,7 @@ footer p {
 
 .autocomplete > .droplist {
   position: absolute;
-  display: none;
+  display: inline-block;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -275,8 +275,8 @@ footer p {
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 0 0 0px 0px; }
 
-.autocomplete.focus > .droplist {
-  display: inline-block; }
+.autocomplete > .droplist li:not(.show) {
+  display: none; }
 
 .droplist > li {
   display: inline-block;
