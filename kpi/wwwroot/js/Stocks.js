@@ -14,12 +14,14 @@ Chart.defaults.global.elements.rectangle.borderWidth = 3;
     var initiateSuggestionBoxesWhenReady = countDown(2,
         function () {
             document
-                .querySelectorAll('.autocomplete ul.droplist')
+                .querySelectorAll('.suggestion-box ul')
                 .forEach(function (droplist) {
                     var droplistItems = supportedTickerSymbols.map(
                         function (ticker) {
-                            return createElementFromHTML(
-                                '<li class="' + ticker.toLowerCase() + '">' + ticker.toUpperCase() + '</li>');
+                            var li = document.createElement("li");
+                            li.innerText = ticker.toUpperCase();
+                            li.dataset.ticker = ticker.toUpperCase();
+                            return li;
                         });
                     droplistItems.forEach(droplist.appendChild.bind(droplist));
                 });
@@ -94,17 +96,19 @@ Chart.defaults.global.elements.rectangle.borderWidth = 3;
     document.addEventListener(
         "DOMContentLoaded",
         function () {
-            var autocompleteContainer = document.querySelector('.autocomplete');
-            var droplist = autocompleteContainer.querySelector('ul.droplist');
-            var autocompleteInput = autocompleteContainer.querySelector('input[disabled="disabled"]');
+            var suggestionBox = document.querySelector('.suggestion-box');
+            var droplist = suggestionBox.querySelector('ul');
+            var addIntradayQuotesInput = suggestionBox.querySelector('input:not([disabled="disabled"])');
+            var autocompleteInput = suggestionBox.querySelector('input[disabled="disabled"]');
+            var addIntradayQuotesButton = suggestionBox.querySelector('button');
 
             if (document.activeElement === addIntradayQuotesInput)
-                autocompleteContainer.classList.add("focus");
+                suggestionBox.classList.add("focus");
 
             droplist.addEventListener(
                 "mousedown",
                 function (e) {
-                    var ticker = e.target.classList[0].toUpperCase();
+                    var ticker = e.target.dataset.ticker;
                     if (ticker && supportedTickerSymbols.indexOf(ticker) !== 0) {
                         autocompleteInput.value = ticker;
                         addIntradayQuotesInput.value = ticker;
@@ -112,16 +116,16 @@ Chart.defaults.global.elements.rectangle.borderWidth = 3;
                     }
                 });
 
-            autocompleteContainer.addEventListener(
+            suggestionBox.firstElementChild.addEventListener(
                 "focusin",
                 function (e) {
                     updateSuggestionDroplist();
-                    autocompleteContainer.classList.add("focus");
+                    suggestionBox.classList.add("focus");
                 });
-            autocompleteContainer.addEventListener(
+            suggestionBox.firstElementChild.addEventListener(
                 "focusout",
                 function (e) {
-                    autocompleteContainer.classList.remove("focus");
+                    suggestionBox.classList.remove("focus");
                 });
 
             addIntradayQuotesInput.addEventListener(
@@ -149,12 +153,12 @@ Chart.defaults.global.elements.rectangle.borderWidth = 3;
                                 if (++indexOfCurrentSelection < matches.length)
                                     matches[indexOfCurrentSelection].classList.add("pre-selected");
                             } else {
-                                droplist.firstChild.classList.add("pre-selected");
+                                droplist.firstElementChild.classList.add("pre-selected");
                             }
                             break;
                         case "Enter":
-                            addIntradayQuotesInput.value = currentSelection.classList[0].toUpperCase();
-                            autocompleteInput.value = currentSelection.classList[0].toUpperCase();
+                            addIntradayQuotesInput.value = currentSelection.dataset.ticker;
+                            autocompleteInput.value = currentSelection.dataset.ticker;
                             updateSuggestionDroplist();
                             updateAddIntradayQuotesButtonEnabled();
                             break;
@@ -200,11 +204,11 @@ Chart.defaults.global.elements.rectangle.borderWidth = 3;
                     : supportedTickerSymbols;
 
                 document
-                    .querySelectorAll('.autocomplete ul.droplist')
+                    .querySelectorAll('.suggestion-box ul')
                     .forEach(function (droplist) {
                         droplist.children.forEach(function (li) {
                             li.classList.remove("show");
-                            if (tickers.indexOf(li.className.toUpperCase()) !== -1)
+                            if (tickers.indexOf(li.dataset.ticker) !== -1)
                                 li.classList.add("show");
                         });
                     });

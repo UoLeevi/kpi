@@ -1,0 +1,14 @@
+﻿@model (IEnumerable<string> items, string datasetAttribute, string placeholder)
+<div class="suggestion-box">
+    <div>
+        <input type="text" spellcheck="false" class="upper" placeholder="@Model.placeholder" />
+        <input type="text" spellcheck="false" class="upper" disabled="disabled" />
+        <ul>
+            @foreach (var item in Model.items)
+            {
+                <li @($"data-{Model.datasetAttribute}")="@item.ToUpper()">@item</li>
+            }
+        </ul>
+    </div>
+    <button style="width:40px;"><partial name="_AngleRightIcon" /></button>
+</div>

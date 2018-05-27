@@ -5,14 +5,7 @@
     Layout = "_Layout";
 }
 @section Header  {
-    <div class="suggestion-box">
-        <div class="autocomplete">
-            <input id="addIntradayQuotesInput" type="text" class="upper" placeholder="Ticker symbol" />
-            <input type="text" class="upper" disabled="disabled" />
-            <ul class="droplist"></ul>
-        </div>
-        <button class="w40px" id="addIntradayQuotesButton"><partial name="Shared/_AngleRightIcon.cshtml" /></button>
-    </div>
+    <vc:suggestion-box dataset-attribute="ticker" placeholder="TICKER SYMBOL" />
 }
 @section Aside {
 
