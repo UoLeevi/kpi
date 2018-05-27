@@ -1,0 +1,11 @@
+﻿## TODO 
+ - Contact form
+ - Samples page
+ - Callout tip if user hasn't interacted in x seconds
+
+## Ideas
+ - Details area when hovering over a datapoint
+ - Samples
+	- SEO data using Google Analytics
+	- Stock quote data
+		- https://www.alphavantage.co/documentation/

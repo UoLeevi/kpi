@@ -9,11 +9,11 @@
     <p class="flex-1">© @DateTime.Today.Year Leevi Uotinen. All Rights Reserved</p>
 }
 @section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script src="~/js/ts.js"></script>
-    <script src="~/js/site.js"></script>
+    <script src="~/js/kpi.app.js"></script>
 }
-
-<div id="chart-container" class="animation-paused">
+<div id="chart-container" class="animation-paused animate-expand chart-container-normal">
     <canvas id="kpi-chart"></canvas>
 </div>
 <h2 id="kpi-tagline" class="color-white text-center nowrap">You could soon have your KPI Dashboard<br class="below-1200w" /> here at <a id="kpi-yourcompany" class="color-bright hov-highlight" href="#"><span class="typing">yourcompany</span>.kpi.app</a>!</h2>

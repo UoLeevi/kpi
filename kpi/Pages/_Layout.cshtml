@@ -4,16 +4,29 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.min.css" />
 </head>
-<body>
-    <main class="b-center">
+<body class="
+      @(IsSectionDefined("Header") ? "with-header" : "")
+      @(IsSectionDefined("Aside") ? "with-aside" : "")">
+    @if (IsSectionDefined("Header"))
+    {
+        <header>
+            @RenderSection("Header", required: false)
+        </header>
+    }
+    @if (IsSectionDefined("Aside"))
+    {
+        <aside>
+            @RenderSection("Aside", required: false)
+        </aside>
+    }
+    <main class="flexbox-center">
         @RenderBody()
     </main>
     <footer>
         @RenderSection("Footer", required: false)
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

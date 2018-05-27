@@ -1,0 +1,30 @@
+﻿@page
+@model kpi.Pages.Samples.StocksModel
+@{
+    ViewData["Title"] = "Stocks";
+    Layout = "_Layout";
+}
+@section Header  {
+    <div class="suggestion-box">
+        <div class="autocomplete">
+            <input id="addIntradayQuotesInput" type="text" class="upper" placeholder="Ticker symbol" />
+            <input type="text" class="upper" disabled="disabled" />
+            <ul class="droplist"></ul>
+        </div>
+        <button class="w40px" id="addIntradayQuotesButton"><partial name="Shared/_AngleRightIcon.cshtml" /></button>
+    </div>
+}
+@section Aside {
+
+}
+@section Footer {
+    <p class="flex-1"><a href="/">KPI.app</a></p>
+    <p class="flex-1"><a href="/Samples">Samples</a></p>
+    <p class="flex-1">© @DateTime.Today.Year Leevi Uotinen. All Rights Reserved</p>
+}
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="~/lib/signalr.js"></script>
+    <script src="~/js/Stocks.js"></script>
+}
+    <div id="chart-grid" class="flexbox-vertical"></div>

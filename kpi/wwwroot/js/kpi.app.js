@@ -13,6 +13,87 @@
         values: [0, 15, 10, 5, 25, 30, 40, 45, 41, 35, 44, 51]
     };
 
+    document.addEventListener(
+        "DOMContentLoaded",
+        function (event) {
+            var yourcompanyKpiAppAnchor = document.getElementById("kpi-yourcompany");
+            var chartContainer = document.getElementById("chart-container");
+            var canvas = document.getElementById('kpi-chart');
+
+            yourcompanyKpiAppAnchor.addEventListener(
+                "click",
+                drawChartOnce);
+
+            var typing = new TypingEffect(
+                document.querySelector(".typing"),
+                ["nextinvestment", "digitalsolutions", "engineeredsuccess", "industry4.0", "designagency", "yourname", "yourcompany"]);
+
+            setTimeout(
+                TypingEffect.prototype.start.bind(typing),
+                2800);
+
+            function drawChartOnce() {
+                yourcompanyKpiAppAnchor.removeEventListener(
+                    "click",
+                    drawChartOnce);
+
+                typing.untypingFinished.addOnce(
+                    function () { collapse(document.getElementById("kpi-tagline")); });
+                typing.stop(StopTiming.AfterUntyping);
+
+                chartContainer.classList.remove("animation-paused");
+                setTimeout(function () {
+                    var monthsChart = new Chart(
+                        canvas.getContext('2d'),
+                        getDefaultChartSettings(chartTypes[0]));
+
+                    var monthIndex = monthsChart.data.labels.length - 1;
+
+                    var rollDataInterval = setRollDataInterval();
+
+                    canvas.addEventListener(
+                        "click",
+                        function (event) {
+                            var nextChartType = chartTypes[++chartTypeIndex % chartTypes.length];
+                            clearInterval(rollDataInterval);
+                            monthsChart.destroy();
+                            monthsChart = new Chart(
+                                canvas.getContext('2d'),
+                                getDefaultChartSettings(nextChartType));
+                            rollDataInterval = setRollDataInterval();
+                        });
+
+                    function setRollDataInterval() {
+                        return setInterval(
+                            function () {
+                                rollData(
+                                    monthsChart,
+                                    months[++monthIndex % months.length],
+                                    getRandomNewValue(
+                                        monthsChart.data.datasets[0].data[11],
+                                        100,
+                                        0,
+                                        10));
+                            },
+                            5000);
+                    }
+
+                    function getRandomNewValue(
+                        previousValue,
+                        maxValue,
+                        minValue,
+                        maxChange) {
+                        return Math.min(
+                            Math.max(
+                                previousValue + Math.floor(
+                                    (Math.random() - 0.5) * 2 * maxChange),
+                                0),
+                            100);
+                    }
+                }, 400);
+            }
+        });
+
     function getDefaultChartSettings(
         chartType) {
 
@@ -97,87 +178,6 @@
                 return chartSettings;
         }
     }
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        function (event) {
-            var yourcompanyKpiAppAnchor = document.getElementById("kpi-yourcompany");
-            var chartContainer = document.getElementById("chart-container");
-            var canvas = document.getElementById('kpi-chart');
-
-            yourcompanyKpiAppAnchor.addEventListener(
-                "click",
-                drawChartOnce);
-
-            var typing = new TypingEffect(
-                document.querySelector(".typing"),
-                ["nextinvestment", "digitalsolutions", "engineeredsuccess", "industry4.0", "designagency", "yourname", "yourcompany"]);
-
-            setTimeout(
-                TypingEffect.prototype.start.bind(typing),
-                2800);
-
-            function drawChartOnce() {
-                yourcompanyKpiAppAnchor.removeEventListener(
-                    "click",
-                    drawChartOnce);
-
-                typing.untypingFinished.addOnce(
-                    function () { collapse(document.getElementById("kpi-tagline")); });
-                typing.stop(StopTiming.AfterUntyping);
-
-                chartContainer.classList.remove("animation-paused");
-                setTimeout(function () {
-                    var monthsChart = new Chart(
-                        canvas.getContext('2d'),
-                        getDefaultChartSettings(chartTypes[0]));
-
-                    var monthIndex = monthsChart.data.labels.length - 1;
-
-                    var rollDataInterval = setRollDataInterval();
-
-                    canvas.addEventListener(
-                        "click",
-                        function (event) {
-                            var nextChartType = chartTypes[++chartTypeIndex % chartTypes.length];
-                            clearInterval(rollDataInterval);
-                            monthsChart.destroy();
-                            monthsChart = new Chart(
-                                canvas.getContext('2d'),
-                                getDefaultChartSettings(nextChartType));
-                            rollDataInterval = setRollDataInterval();
-                        });
-
-                    function setRollDataInterval() {
-                        return setInterval(
-                            function () {
-                                rollData(
-                                    monthsChart,
-                                    months[++monthIndex % months.length],
-                                    getRandomNewValue(
-                                        monthsChart.data.datasets[0].data[11],
-                                        100,
-                                        0,
-                                        10));
-                            },
-                            5000);
-                    }
-
-                    function getRandomNewValue(
-                        previousValue,
-                        maxValue,
-                        minValue,
-                        maxChange) {
-                        return Math.min(
-                            Math.max(
-                                previousValue + Math.floor(
-                                    (Math.random() - 0.5) * 2 * maxChange),
-                                0),
-                            100);
-                    }
-                }, 400);
-            }
-        });
 
     function rollData(
         chart,
